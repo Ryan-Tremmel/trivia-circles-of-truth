@@ -4,7 +4,8 @@ import { setCurrentUser } from '../slices/currentUserSlice';
 export const currentUserApi = createApi({
   reducerPath: 'currentUserApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://trivia-circles-of-truth-api/trivia/api/users',
+    baseUrl:
+      'https://trivia-circles-of-truth-api.onrender.com/trivia/api/users',
   }),
   endpoints: builder => ({
     signupUser: builder.mutation({
