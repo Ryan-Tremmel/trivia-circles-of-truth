@@ -12,11 +12,6 @@ html {
   font-size: 62.5%;
   height: 100%;
 }
-@media (max-width: 68.75em) {
-  html {
-    font-size: 56.25%;
-  }
-}
 @media (max-width: 42.19em) {
   html {
     font-size: 50%;
@@ -26,9 +21,7 @@ html {
 body {
   display: flex;
   flex: 1;
-  background-color: #5300d7;
-  background-image: radial-gradient(circle at center center, #e400ff, #5300d7), repeating-radial-gradient(circle at center center, #e400ff, #e400ff, 10px, transparent 20px, transparent 10px);
-  background-blend-mode: multiply;
+  background-color: #264653;
   color: white;
   font-size: 1.6rem;
   font-family: "Montserrat", sans-serif;
@@ -82,25 +75,25 @@ body {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
 }
 .btn--primary {
-  background: #e400ff;
+  background: #2a9d8f;
 }
 .btn--primary:hover {
-  background: #a000b3;
+  background: #227e72;
 }
 .btn--correct {
-  background: #f280ff;
+  background: #e9c46a;
 }
 .btn--correct:hover {
-  background: #f280ff;
+  background: #e9c46a;
 }
 .btn--incorrect {
-  background: #a000b3;
+  background: #227e72;
 }
 .btn--incorrect:hover {
-  background: #a000b3;
+  background: #227e72;
 }
 .btn--disabled {
-  background: #a000b3;
+  background: #227e72;
 }
 
 .text--general {
@@ -173,16 +166,26 @@ body {
 /***** APP CLASSES *****/
 /******************************/
 .app {
-  display: grid;
-  grid-template-rows: [header-start] auto [mainContent-start] 1fr [copyrightLoginContainer-start] auto;
+  display: flex;
+  flex-direction: column;
   justify-items: center;
-  gap: 4rem;
-  padding: 6rem 8rem 1.5rem 8rem;
+  align-items: center;
+  padding: 6rem 4rem 1.5rem 4rem;
   height: 100%;
 }
 @media (max-width: 90em) {
   .app {
-    padding: 3rem 1.5rem 1rem 1.5rem;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+  }
+}
+@media (max-width: 55.31em) {
+  .app {
+    justify-content: space-around;
+  }
+}
+@media (max-width: 42.19em) {
+  .app {
+    padding: 5rem 1.5rem 1rem 1.5rem;
   }
 }
 
@@ -190,7 +193,7 @@ body {
   display: grid;
   grid-template-rows: [amountIncorrect-start] minmax(max-content, auto) [triviaContainer-start] minmax(max-content, auto) [score-start] auto;
   justify-items: center;
-  gap: 4rem;
+  gap: 3rem;
   width: 70%;
 }
 @media (max-width: 90em) {
@@ -207,6 +210,13 @@ body {
   font-style: normal;
   font-size: 6rem;
   font-weight: 400;
+  margin-bottom: 10rem;
+  text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 90em) {
+  .header__text {
+    margin-bottom: 2.5rem;
+  }
 }
 @media (max-width: 68.75em) {
   .header__text {
@@ -241,6 +251,7 @@ body {
 }
 @media (max-width: 90em) {
   .rules__text {
+    line-height: 3rem;
     width: 80%;
   }
 }
@@ -296,7 +307,7 @@ body {
   font-size: 1.3rem;
 }
 .form__input {
-  background-color: rgba(228, 0, 255, 0.4);
+  background-color: rgba(42, 157, 143, 0.4);
   border: none;
   border-radius: 100px;
   color: inherit;
@@ -310,6 +321,9 @@ body {
     font-size: 1.5rem;
     width: 32rem;
   }
+}
+.form__input:focus {
+  outline: 2px solid #6abab1;
 }
 .form__input__username {
   min-width: 30rem;
@@ -365,14 +379,14 @@ input[type=password] {
   font-size: 10rem;
 }
 .amountIncorrect--incorrect {
-  color: #d21456;
+  color: #e36040;
 }
 
 .triviaContainer {
   grid-row: triviaContainer-start/score-start;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
   padding: 0 2rem;
   width: 100%;
 }
@@ -393,12 +407,34 @@ input[type=password] {
 }
 
 .questionContainer {
+  position: relative;
+  color: #fff;
+  background: #264653;
+  background-clip: padding-box;
+  border: solid 5px transparent;
+  border-radius: 1em;
+  box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.3);
   align-self: center;
-  background: rgb(0, 137, 142);
-  background: linear-gradient(0deg, rgb(0, 137, 142) 0%, rgb(0, 247, 255) 50%, rgb(0, 137, 142) 100%);
   padding: 6px;
   text-align: center;
-  width: 100%;
+  width: 85%;
+}
+.questionContainer:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  margin: -5px;
+  border-radius: inherit;
+  background: linear-gradient(to right, #e9c46a 0%, #e9c46a 25%, #6abab1 50%, #2a9d8f 70%, #227e72 100%);
+}
+@media (max-width: 90em) {
+  .questionContainer {
+    width: 95%;
+  }
 }
 @media (max-width: 55.31em) {
   .questionContainer {
@@ -412,10 +448,6 @@ input[type=password] {
 }
 
 .question {
-  border: 4px solid purple;
-  background-clip: padding-box;
-  background-color: #5300d7;
-  background-image: radial-gradient(#e400ff 0.5px, transparent 0.5px), radial-gradient(#e400ff 0.5px, #5300d7 0.5px);
   background-size: 20px 20px;
   background-position: 0 0, 10px 10px;
   padding: 1rem;
@@ -536,6 +568,7 @@ input[type=password] {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   font-size: 1.5rem;
+  margin-top: auto;
   width: 100%;
 }
 
