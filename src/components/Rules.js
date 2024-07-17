@@ -61,9 +61,11 @@ export default function Rules({ setShowRules }) {
         progress, the harder they will get. You have three (3) lives, designated
         by three X's at the top of the screen. If you answer correctly, you gain
         money! If you answer incorrectly, you lose a life. You can buy a life,
-        but it'll cost you some of your current score. You'll have a chance to
-        save your highscore at the end, or if you've already saved, you can sign
-        in. Good luck and see how far you can get!
+        but it'll cost you some of your current score. After 30 questions, the
+        difficulty will increase as well as the amount needed to buy a life.
+        You'll have a chance to save your highscore at the end, or if you've
+        already saved one previously, you can sign in. Good luck and see how far
+        you can get!
       </p>
       <Button
         buttonClass={'btn btn--long btn--primary mb-3'}
