@@ -132,6 +132,15 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
     else if (gameState === 'incorrect' && lives === 0) setQuestionIndex(0);
   }, [data, gameState]);
 
+  // useEffect responsible for fetching more questions towards the end of the data so that the game does not crash
+  useEffect(() => {
+    if (
+      questionIndex > 30 &&
+      currentQuestion.correctAnswer === currentAPIQueryData[31].correctAnswer
+    )
+      refetch('hard');
+  }, [questionIndex, currentAPIQueryData, currentQuestion]);
+
   return (
     <div className="triviaContainer">
       {lives ? (

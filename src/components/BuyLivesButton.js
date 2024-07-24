@@ -35,12 +35,12 @@ export default function BuyLivesButton({ isClickable }) {
     const thresholds = [
       {
         threshold: 'easy',
-        cost: 10000,
+        cost: 5000,
       },
-      { threshold: 'medium', cost: 100000 },
+      { threshold: 'medium', cost: 25000 },
       {
         threshold: 'hard',
-        cost: 10000000,
+        cost: 100000,
       },
     ];
 
