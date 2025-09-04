@@ -2,6 +2,13 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useFetchQuestionsQuery } from '../store';
 import { useResetGame } from '../hooks/useResetGame';
+import { 
+  QUESTION_INDEX_THRESHOLD, 
+  LAST_QUESTION_INDEX, 
+  ERROR_MESSAGES, 
+  GAME_STATES,
+  DIFFICULTY_LEVELS 
+} from '../constants/gameConstants';
 
 import QuestionWorth from './QuestionWorth';
 import Question from './Question';
@@ -53,8 +60,8 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
   const resetGame = useResetGame();
   // Resets the game by setting all relevant states to default by using the useResetGame custom hook
   const handleClickRestart = () => {
-    resetGame('easy');
-    refetch('easy');
+    resetGame(DIFFICULTY_LEVELS.EASY);
+    refetch(DIFFICULTY_LEVELS.EASY);
   };
 
   // Functionality //
@@ -63,8 +70,7 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
     // Error
     if (isError) {
       setCurrentQuestion({
-        question:
-          'Could not load questions. Please refresh or try again later!',
+        question: ERROR_MESSAGES.LOADING_FAILED,
         answers: [],
         correctAnswer: '',
       });
@@ -73,7 +79,7 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
     // Loading
     if (isLoading) {
       setCurrentQuestion({
-        question: 'Loading questions... please wait...',
+        question: ERROR_MESSAGES.LOADING,
         answers: [],
         correctAnswer: '',
       });
@@ -93,7 +99,7 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
       // Checks if state has been updated with the incoming data before trying to read said data
       if (currentAPIQueryData) {
         // gameState should be guessing - sets the current question and loads it into currentQuestion state
-        if (gameState === 'guessing') {
+        if (gameState === GAME_STATES.GUESSING) {
           /* Sets the current question and corresponding data to the current data based on the index, which is updated
              each time the user selects an answer */
           setCurrentQuestion({
@@ -112,11 +118,11 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
   // useEffect responsible for checking gameState and allowing buttons to be clickable as well as moving to next question
   useEffect(() => {
     // If the player has more than 1 life OR if the gameState is incorrect with 0 lives (end-game)
-    if (lives >= 1 || (gameState === 'incorrect' && lives === 0))
+    if (lives >= 1 || (gameState === GAME_STATES.INCORRECT && lives === 0))
       setIsClickable(true);
 
     // gameState after player guesses - sets buttons to be disabled
-    if (gameState !== 'guessing' && lives > 0) {
+    if (gameState !== GAME_STATES.GUESSING && lives > 0) {
       setIsClickable(false);
       // If question is not the first OR if it is the very first question with new data (i.e. start of game or when the player selects an answer)
       if (!isNewData || (isNewData && questionIndex === 0)) {
@@ -129,16 +135,16 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
       }
     }
     // gameState will be incorrect, but the game has ended (intended) (i.e. game has ended)
-    else if (gameState === 'incorrect' && lives === 0) setQuestionIndex(0);
+    else if (gameState === GAME_STATES.INCORRECT && lives === 0) setQuestionIndex(0);
   }, [data, gameState]);
 
   // useEffect responsible for fetching more questions towards the end of the data so that the game does not crash
   useEffect(() => {
     if (
-      questionIndex > 30 &&
-      currentQuestion.correctAnswer === currentAPIQueryData[31].correctAnswer
+      questionIndex > QUESTION_INDEX_THRESHOLD &&
+      currentQuestion.correctAnswer === currentAPIQueryData[LAST_QUESTION_INDEX].correctAnswer
     )
-      refetch('hard');
+      refetch(DIFFICULTY_LEVELS.HARD);
   }, [questionIndex, currentAPIQueryData, currentQuestion]);
 
   return (

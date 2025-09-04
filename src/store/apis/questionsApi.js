@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_BASE_URL, QUESTIONS_PER_FETCH, API_CACHE_TIME } from '../../constants/gameConstants';
 
 export const questionsApi = createApi({
   reducerPath: 'questions',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://the-trivia-api.com/v2/',
+    baseUrl: API_BASE_URL,
   }),
 
   endpoints: builder => ({
@@ -11,12 +12,12 @@ export const questionsApi = createApi({
       query: difficulty => ({
         url: 'questions',
         params: {
-          limit: '32',
+          limit: QUESTIONS_PER_FETCH.toString(),
           difficulties: difficulty,
         },
         method: 'GET',
       }),
-      keepUnusedDataFor: 1,
+      keepUnusedDataFor: API_CACHE_TIME,
     }),
   }),
 

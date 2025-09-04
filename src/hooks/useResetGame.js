@@ -6,15 +6,21 @@ import {
   updateScoreMultiplier,
 } from '../store';
 import { useDispatch } from 'react-redux';
+import { 
+  INITIAL_LIVES, 
+  INITIAL_SCORE, 
+  INITIAL_MULTIPLIER, 
+  INITIAL_GAME_STATE 
+} from '../constants/gameConstants';
 
 export const useResetGame = () => {
   const dispatch = useDispatch();
 
   return difficulty => {
     dispatch(updateQuestionDifficulty(difficulty));
-    dispatch(resetLives(3));
-    dispatch(resetCurrentScore(0));
-    dispatch(updateScoreMultiplier(1));
-    dispatch(updateGameState('guessing'));
+    dispatch(resetLives(INITIAL_LIVES));
+    dispatch(resetCurrentScore(INITIAL_SCORE));
+    dispatch(updateScoreMultiplier(INITIAL_MULTIPLIER));
+    dispatch(updateGameState(INITIAL_GAME_STATE));
   };
 };

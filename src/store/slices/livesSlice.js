@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { INITIAL_LIVES } from '../../constants/gameConstants';
 
 const livesSlice = createSlice({
   name: 'lives',
-  initialState: 3,
+  initialState: INITIAL_LIVES,
   reducers: {
     removeLives(state, action) {
       return state - action.payload;
