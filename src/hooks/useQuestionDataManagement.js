@@ -4,10 +4,11 @@ import { useFetchQuestionsQuery } from '../store';
 import { 
   QUESTION_INDEX_THRESHOLD, 
   LAST_QUESTION_INDEX, 
-  ERROR_MESSAGES, 
   GAME_STATES,
   DIFFICULTY_LEVELS 
 } from '../constants/gameConstants';
+import { ERROR_MESSAGES } from '../constants/errorConstants';
+import { getErrorMessage, logError, isRetryableError } from '../utils/errorUtils';
 
 export const useQuestionDataManagement = (questionIndex) => {
   // Redux state - exactly as in TriviaContainer
@@ -24,9 +25,11 @@ export const useQuestionDataManagement = (questionIndex) => {
   });
   const [isNewData, setIsNewData] = useState(false);
   const [isClickable, setIsClickable] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [isRetrying, setIsRetrying] = useState(false);
 
   // API query - exactly as in TriviaContainer
-  const { data, isLoading, isError, isSuccess, isFetching, refetch } =
+  const { data, isLoading, isError, isSuccess, isFetching, refetch, error } =
     useFetchQuestionsQuery(questionDifficulty);
 
   // Utility function - exactly as in TriviaContainer
@@ -40,19 +43,28 @@ export const useQuestionDataManagement = (questionIndex) => {
 
   // First useEffect - exactly as in TriviaContainer
   useEffect(() => {
-    // Error
+    // Error handling with improved messaging
     if (isError) {
+      const errorMessage = getErrorMessage(error, 'questions');
+      logError(error, 'question-data-management', { questionIndex, questionDifficulty });
+      
       setCurrentQuestion({
-        question: ERROR_MESSAGES.LOADING_FAILED,
+        question: errorMessage,
         answers: [],
         correctAnswer: '',
       });
+      
+      setIsRetrying(false);
     }
 
     // Loading
     if (isLoading) {
+      const loadingMessage = isRetrying 
+        ? ERROR_MESSAGES.RETRYING 
+        : ERROR_MESSAGES.LOADING;
+        
       setCurrentQuestion({
-        question: ERROR_MESSAGES.LOADING,
+        question: loadingMessage,
         answers: [],
         correctAnswer: '',
       });
@@ -109,6 +121,22 @@ export const useQuestionDataManagement = (questionIndex) => {
       refetch(DIFFICULTY_LEVELS.HARD);
   }, [questionIndex, currentAPIQueryData, currentQuestion]);
 
+  // Retry function for failed requests
+  const handleRetry = async () => {
+    if (isRetryableError(error) && retryCount < 3) {
+      setIsRetrying(true);
+      setRetryCount(prev => prev + 1);
+      
+      try {
+        await refetch();
+      } catch (retryError) {
+        logError(retryError, 'question-retry', { retryCount: retryCount + 1 });
+      } finally {
+        setIsRetrying(false);
+      }
+    }
+  };
+
   return {
     // State
     currentQuestion,
@@ -119,6 +147,13 @@ export const useQuestionDataManagement = (questionIndex) => {
     
     // API
     refetch,
+    
+    // Error handling
+    isError,
+    error,
+    isRetrying,
+    canRetry: isRetryableError(error) && retryCount < 3,
+    handleRetry,
     
     // Computed
     hasLives: lives > 0,

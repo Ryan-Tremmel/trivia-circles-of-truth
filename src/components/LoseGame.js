@@ -4,6 +4,7 @@ import { useSignupUserMutation, useUpdateUserMutation } from '../store';
 import Form from './Form';
 import HighscoreButton from './HighscoreButton';
 import RestartButton from './RestartButton';
+import { getErrorMessage, logError } from '../utils/errorUtils';
 
 export default function LoseGame({ isClickable, handleClickRestart }) {
   // State Management //
@@ -69,24 +70,15 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
     try {
       await signupUser({ username, password, highscore }).unwrap();
     } catch (err) {
-      console.error(err.status);
-
-      if (err) {
-        if (err.status === 'PARSING_ERROR') {
-          setLoseGameText(
-            'Password needs to be a minimum of eight alpha-numeric characters.'
-          );
-        } else {
-          setLoseGameText(
-            'Could not contact server - please try again later to sign up.'
-          );
-        }
-        setTimeout(() => {
-          setLoseGameText(
-            'You can either submit your highscore or you can restart and try again!'
-          );
-        }, 5000);
-      }
+      logError(err, 'signup', { username, highscore });
+      const errorMessage = getErrorMessage(err, 'auth');
+      
+      setLoseGameText(errorMessage);
+      setTimeout(() => {
+        setLoseGameText(
+          'You can either submit your highscore or you can restart and try again!'
+        );
+      }, 5000);
     }
   };
   // Functionality //

@@ -25,6 +25,10 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
     setIsNewData,
     refetch,
     hasLives,
+    isError,
+    isRetrying,
+    canRetry,
+    handleRetry
   } = useQuestionDataManagement(questionIndex);
 
   // Question navigation hook
@@ -52,6 +56,18 @@ export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
           <QuestionWorth />
           <div className="questionContainer">
             <Question question={currentQuestion.question} />
+            {/* Error state with retry option */}
+            {isError && canRetry && (
+              <div className="error-retry-container">
+                <button 
+                  className="btn btn--secondary btn--small"
+                  onClick={handleRetry}
+                  disabled={isRetrying}
+                >
+                  {isRetrying ? 'Retrying...' : 'Retry'}
+                </button>
+              </div>
+            )}
           </div>
           <AnswersContainer
             currentQuestion={currentQuestion}

@@ -5,6 +5,7 @@ import Header from './Header';
 import Rules from './Rules';
 import MainContent from './MainContent';
 import Copyright from './Copyright';
+import ErrorBoundary from './ErrorBoundary';
 
 export default function App() {
   const currentUser = useSelector(state => state.currentUser?.username);
@@ -13,17 +14,19 @@ export default function App() {
   const [showRules, setShowRules] = useState(true);
 
   return (
-    <div className="app">
-      <Header />
-      {showRules ? <Rules setShowRules={setShowRules} /> : <MainContent />}
-      <div className="copyrightLoginContainer">
-        <Copyright />
-        {!currentUser ? (
-          ''
-        ) : (
-          <p className="loginUsername">Playing as {currentUser}</p>
-        )}
+    <ErrorBoundary>
+      <div className="app">
+        <Header />
+        {showRules ? <Rules setShowRules={setShowRules} /> : <MainContent />}
+        <div className="copyrightLoginContainer">
+          <Copyright />
+          {!currentUser ? (
+            ''
+          ) : (
+            <p className="loginUsername">Playing as {currentUser}</p>
+          )}
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }

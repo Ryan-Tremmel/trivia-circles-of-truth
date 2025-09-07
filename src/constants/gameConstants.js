@@ -60,11 +60,6 @@ export const GAME_CONSTANTS = {
     HARD: 'hard'
   },
   
-  // Error Messages
-  ERROR_MESSAGES: {
-    LOADING_FAILED: 'Could not load questions. Please refresh or try again later!',
-    LOADING: 'Loading questions... please wait...'
-  }
 };
 
 // Export individual constants for easier imports
@@ -83,6 +78,5 @@ export const {
   DIFFICULTY_THRESHOLDS,
   SCORE_THRESHOLDS,
   GAME_STATES,
-  DIFFICULTY_LEVELS,
-  ERROR_MESSAGES
+  DIFFICULTY_LEVELS
 } = GAME_CONSTANTS;
