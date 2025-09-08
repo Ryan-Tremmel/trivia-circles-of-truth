@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from './Button';
+import ValidationDisplay from './ValidationDisplay';
 
 export default function Form({
   submitType,
@@ -45,8 +46,20 @@ export default function Form({
   }, [password, isChecked]);
 
   return (
-    <form className={`formContainer ${utilFn} ${appearance}`}>
-      <label className="form__label__username ml-1">Username</label>
+    <div>
+      {/* Validation display for signup forms */}
+      {submitType === 'signup' && (
+        <ValidationDisplay
+          username={username}
+          password={password}
+          submitType={submitType}
+          showValidation={false}
+          realTimeValidation={true}
+        />
+      )}
+      
+      <form className={`formContainer ${utilFn} ${appearance}`}>
+        <label className="form__label__username ml-1">Username</label>
       <input
         className="form__input__username form__input"
         type="text"
@@ -83,6 +96,7 @@ export default function Form({
       >
         {submitText}
       </Button>
-    </form>
+      </form>
+    </div>
   );
 }
