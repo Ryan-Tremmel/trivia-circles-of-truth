@@ -73,7 +73,7 @@ export const validatePassword = (password) => {
   }
 
   // Allow letters, numbers, and common special characters (matching backend validation)
-  if (!/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]+$/.test(password)) {
+  if (!/^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~`]+$/.test(password)) {
     return {
       isValid: false,
       error: 'Password can contain letters, numbers, and special characters'
@@ -149,7 +149,7 @@ export const getPasswordStrength = (password) => {
   }
 
   // Special characters check
-  if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(password)) {
+  if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~`]/.test(password)) {
     score += 1;
   } else {
     feedback.push('special characters');
