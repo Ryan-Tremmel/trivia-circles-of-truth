@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { ERROR_MESSAGES } from '../constants/errorConstants';
+import './ErrorBoundary.css';
 
 class ErrorBoundary extends Component {
   constructor(props) {

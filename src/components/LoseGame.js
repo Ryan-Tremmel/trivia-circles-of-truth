@@ -5,6 +5,7 @@ import Form from './Form';
 import HighscoreButton from './HighscoreButton';
 import RestartButton from './RestartButton';
 import { getErrorMessage, logError } from '../utils/errorUtils';
+import './LoseGame.css';
 
 export default function LoseGame({ isClickable, handleClickRestart }) {
   // State Management //

@@ -1,0 +1,32 @@
+/* LoseGame Component Styles */
+
+.loseGame {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loseGame__textBig {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.loseGame__textSmall {
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.loseGameBtnContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.loseGame__btn__text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+}

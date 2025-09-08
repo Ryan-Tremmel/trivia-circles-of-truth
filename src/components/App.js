@@ -6,6 +6,7 @@ import Rules from './Rules';
 import MainContent from './MainContent';
 import Copyright from './Copyright';
 import ErrorBoundary from './ErrorBoundary';
+import './App.css';
 
 export default function App() {
   const currentUser = useSelector(state => state.currentUser?.username);

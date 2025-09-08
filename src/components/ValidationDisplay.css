@@ -109,6 +109,51 @@
   }
 }
 
+/* Form-style slide animations */
+@keyframes validationSlideIn {
+  0% {
+    transform: translateY(60%);
+    opacity: 0;
+  }
+  25% {
+    transform: translateY(45%);
+  }
+  50% {
+    transform: translateY(30%);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translateY(15%);
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes validationSlideOut {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(30%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(60%);
+    opacity: 0;
+  }
+}
+
+.validation-display--slideIn {
+  animation: validationSlideIn 0.25s ease-out;
+}
+
+.validation-display--slideOut {
+  animation: validationSlideOut 0.25s ease-in;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .validation-display {

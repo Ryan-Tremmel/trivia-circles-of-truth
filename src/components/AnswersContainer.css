@@ -1,0 +1,15 @@
+/* AnswersContainer Component Styles */
+
+.answersContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 2rem;
+  justify-items: center;
+  width: 100%;
+}
+
+@media (max-width: 55.31em) {
+  .answersContainer {
+    grid-template-columns: 1fr;
+  }
+}

@@ -6,6 +6,7 @@ import {
 } from '../store';
 import { useState, useEffect } from 'react';
 import { SCORE_THRESHOLDS, SCORE_BASE_MULTIPLIER, GAME_STATES } from '../constants/gameConstants';
+import './Score.css';
 
 export default function Score() {
   const dispatch = useDispatch();

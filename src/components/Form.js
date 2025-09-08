@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from './Button';
 import ValidationDisplay from './ValidationDisplay';
+import './Form.css';
 
 export default function Form({
   submitType,
@@ -55,6 +56,7 @@ export default function Form({
           submitType={submitType}
           showValidation={false}
           realTimeValidation={true}
+          appearance={appearance}
         />
       )}
       

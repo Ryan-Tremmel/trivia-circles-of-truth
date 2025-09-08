@@ -1,0 +1,70 @@
+/* Global Styles and Utilities */
+
+/* Font imports */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lilita+One&display=swap");
+
+/* Reset and base styles */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  height: 100%;
+}
+
+@media (max-width: 42.19em) {
+  html {
+    font-size: 50%;
+  }
+}
+
+body {
+  display: flex;
+  flex: 1;
+  background-color: #264653;
+  color: white;
+  font-size: 1.6rem;
+  font-family: "Montserrat", sans-serif;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Typography utilities */
+.text--general {
+  font-size: 1.8rem;
+  letter-spacing: 1.2px;
+}
+
+@media (max-width: 42.19em) {
+  .text--general {
+    font-size: 1.7rem;
+  }
+}
+
+/* Spacing utilities */
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
+.mb-3 {
+  margin-bottom: 3rem;
+}
+
+.ml-1 {
+  margin-left: 1rem;
+}

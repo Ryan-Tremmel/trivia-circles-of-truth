@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoginUserMutation } from '../store';
 import { getErrorMessage, logError } from '../utils/errorUtils';
+import './Rules.css';
 
 export default function Rules({ setShowRules }) {
   // State Management //

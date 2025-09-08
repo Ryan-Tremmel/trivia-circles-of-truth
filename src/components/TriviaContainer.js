@@ -11,6 +11,7 @@ import SkipButton from './SkipButton';
 import NextButton from './NextButton';
 import BuyLivesButton from './BuyLivesButton';
 import LoseGame from './LoseGame';
+import './TriviaContainer.css';
 
 export default function TriviaContainer({ questionIndex, setQuestionIndex }) {
   // Redux state for question index management

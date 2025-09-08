@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { validateUsername, validatePassword, getPasswordStrength } from '../utils/validationUtils';
+import './ValidationDisplay.css';
 
 export default function ValidationDisplay({ 
   username = '', 
   password = '', 
   submitType, 
   showValidation = false,
-  realTimeValidation = false 
+  realTimeValidation = false,
+  appearance = ''
 }) {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -37,7 +39,7 @@ export default function ValidationDisplay({
   }
 
   return (
-    <div className="validation-display">
+    <div className={`validation-display ${appearance}`}>
       {/* Username validation */}
       {usernameError && (
         <div className="validation-error">
