@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from './Button';
 
 export default function Form({
@@ -27,7 +28,7 @@ export default function Form({
   };
 
   // Handles showing password or not
-  const handleCheckboxChange = () => {
+  const handlePasswordHideClick = () => {
     setIsChecked(!isChecked);
     setShowPassword(!showPassword);
   };
@@ -64,14 +65,15 @@ export default function Form({
           minWidth: `${passwordInputLength}rem`,
         }}
       />
-      <div className="form__checkbox__container">
-        <input
-          className="form__input__checkbox"
-          type="checkbox"
-          value={false}
-          onChange={handleCheckboxChange}
-        />
-        <label className="form__label__checkbox">Show</label>
+      <div className="form__password-hide__container">
+        <button
+          type="button"
+          className="form__eye__button"
+          onClick={handlePasswordHideClick}
+          aria-label={showPassword ? "Hide password" : "Show password"}
+        >
+          {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+        </button>
       </div>
       <Button
         buttonClass={'btn btn--short btn--primary form__btn'}
