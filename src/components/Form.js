@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from './Button';
+import ValidationDisplay from './ValidationDisplay';
+import './Form.css';
 
 export default function Form({
   submitType,
@@ -27,7 +30,7 @@ export default function Form({
   };
 
   // Handles showing password or not
-  const handleCheckboxChange = () => {
+  const handlePasswordHideClick = () => {
     setIsChecked(!isChecked);
     setShowPassword(!showPassword);
   };
@@ -44,8 +47,21 @@ export default function Form({
   }, [password, isChecked]);
 
   return (
-    <form className={`formContainer ${utilFn} ${appearance}`}>
-      <label className="form__label__username ml-1">Username</label>
+    <div>
+      {/* Validation display for signup forms */}
+      {submitType === 'signup' && (
+        <ValidationDisplay
+          username={username}
+          password={password}
+          submitType={submitType}
+          showValidation={false}
+          realTimeValidation={true}
+          appearance={appearance}
+        />
+      )}
+      
+      <form className={`formContainer ${utilFn} ${appearance}`}>
+        <label className="form__label__username ml-1">Username</label>
       <input
         className="form__input__username form__input"
         type="text"
@@ -64,14 +80,15 @@ export default function Form({
           minWidth: `${passwordInputLength}rem`,
         }}
       />
-      <div className="form__checkbox__container">
-        <input
-          className="form__input__checkbox"
-          type="checkbox"
-          value={false}
-          onChange={handleCheckboxChange}
-        />
-        <label className="form__label__checkbox">Show</label>
+      <div className="form__password-hide__container">
+        <button
+          type="button"
+          className="form__eye__button"
+          onClick={handlePasswordHideClick}
+          aria-label={showPassword ? "Hide password" : "Show password"}
+        >
+          {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+        </button>
       </div>
       <Button
         buttonClass={'btn btn--short btn--primary form__btn'}
@@ -81,6 +98,7 @@ export default function Form({
       >
         {submitText}
       </Button>
-    </form>
+      </form>
+    </div>
   );
 }

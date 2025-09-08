@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { INITIAL_SCORE, INITIAL_MULTIPLIER } from '../../constants/gameConstants';
 
 const scoreSlice = createSlice({
   name: 'score',
   initialState: {
-    currentScore: 0,
-    scoreMultiplier: 1,
+    currentScore: INITIAL_SCORE,
+    scoreMultiplier: INITIAL_MULTIPLIER,
   },
   reducers: {
     updateCurrentScore(state, action) {

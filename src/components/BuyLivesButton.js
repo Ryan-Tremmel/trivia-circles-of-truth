@@ -40,7 +40,7 @@ export default function BuyLivesButton({ isClickable }) {
       { threshold: 'medium', cost: 25000 },
       {
         threshold: 'hard',
-        cost: 100000,
+        cost: 75000,
       },
     ];
 

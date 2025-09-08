@@ -3,6 +3,8 @@ import Button from './Button';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoginUserMutation } from '../store';
+import { getErrorMessage, logError } from '../utils/errorUtils';
+import './Rules.css';
 
 export default function Rules({ setShowRules }) {
   // State Management //
@@ -34,21 +36,13 @@ export default function Rules({ setShowRules }) {
     try {
       await loginUser({ username, password }).unwrap();
     } catch (err) {
-      console.log(err);
-      if (err.status === 'FETCH_ERROR') {
-        setLoginText(
-          'Could not contact server - please try again later to log in.'
-        );
-        setTimeout(() => {
-          setLoginText('Do you have a highscore already saved? Log in!');
-        }, 5000);
-      } else {
-        // If login is not successful, shows error text to user
-        setLoginText(err.data.message);
-        setTimeout(() => {
-          setLoginText('Do you have a highscore already saved? Log in!');
-        }, 3000);
-      }
+      logError(err, 'login', { username });
+      const errorMessage = getErrorMessage(err, 'auth');
+      
+      setLoginText(errorMessage);
+      setTimeout(() => {
+        setLoginText('Do you have a highscore already saved? Log in!');
+      }, 5000);
     }
   };
 

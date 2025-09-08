@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Button from './Button';
 import { updateGameState, removeLives } from '../store';
+import { GAME_STATES } from '../constants/gameConstants';
 
 export default function Answers({
   children,
@@ -25,8 +26,8 @@ export default function Answers({
 
   // Functionality //
   useEffect(() => {
-    if (gameState === 'guessing') setShowCorrectAnswer(false);
-    else if (gameState !== 'guessing') setShowCorrectAnswer(true);
+    if (gameState === GAME_STATES.GUESSING) setShowCorrectAnswer(false);
+    else if (gameState !== GAME_STATES.GUESSING) setShowCorrectAnswer(true);
   }, [gameState]);
 
   // If the clicked answer button is wrong, then it removes a life and changes state, otherwise it is correct
@@ -35,10 +36,10 @@ export default function Answers({
       // Removes a life if the player guesses incorrectly
       if (lives > 0) {
         dispatch(removeLives(1));
-        dispatch(updateGameState('incorrect'));
+        dispatch(updateGameState(GAME_STATES.INCORRECT));
       }
     } else if (children === currentQuestion.correctAnswer) {
-      dispatch(updateGameState('correct'));
+      dispatch(updateGameState(GAME_STATES.CORRECT));
     }
   };
 

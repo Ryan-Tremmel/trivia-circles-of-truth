@@ -1,0 +1,177 @@
+/* Form Component Styles */
+
+.formContainer {
+  display: grid;
+  grid-template-rows: 3rem 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  column-gap: 2rem;
+  position: relative;
+  max-width: 680px;
+}
+
+@media (max-width: 42.19em) {
+  .formContainer {
+    grid-template-rows: 15px 1fr 15px 1fr 1fr;
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+}
+
+.formContainer--slideIn {
+  animation: slideIn 0.25s ease-out;
+}
+
+.formContainer--slideOut {
+  animation: slideOut 0.25s ease-in;
+}
+
+.form__label__username {
+  line-height: 1rem;
+  align-self: end;
+}
+
+@media (max-width: 42.19em) {
+  .form__label__username {
+    grid-row: 1;
+  }
+}
+
+.form__label__password {
+  line-height: 1rem;
+  align-self: end;
+}
+
+@media (max-width: 42.19em) {
+  .form__label__password {
+    grid-row: 3;
+  }
+}
+
+.form__eye__button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.form__eye__button:hover {
+  background-color: rgba(42, 157, 143, 0.2);
+}
+
+.form__input {
+  background-color: rgba(42, 157, 143, 0.4);
+  border: none;
+  border-radius: 100px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1.7rem;
+  padding: 0.5rem 1.5rem;
+  height: 3rem;
+}
+
+@media (max-width: 42.19em) {
+  .form__input {
+    font-size: 1.5rem;
+    width: 32rem;
+  }
+}
+
+.form__input:focus {
+  outline: 2px solid #6abab1;
+}
+
+.form__input__username {
+  min-width: 30rem;
+  grid-row: 2;
+}
+
+@media (max-width: 42.19em) {
+  .form__input__username {
+    grid-row: 2;
+  }
+}
+
+.form__input__password {
+  grid-row: 2;
+}
+
+@media (max-width: 42.19em) {
+  .form__input__password {
+    grid-row: 4;
+  }
+}
+
+.form__password-hide__container {
+  grid-row: 2;
+  display: flex;
+  margin-left: -7.5rem;
+  gap: 0.8rem;
+}
+
+@media (max-width: 42.19em) {
+  .form__password-hide__container {
+    grid-row: 4;
+    margin-left: -6rem;
+  }
+}
+
+.form__btn {
+  grid-column: 1/3;
+  grid-row: 3;
+  justify-self: center;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 42.19em) {
+  .form__btn {
+    grid-row: 5;
+  }
+}
+
+input[type=password] {
+  font-size: 3rem;
+}
+
+/* Animations */
+@keyframes slideIn {
+  0% {
+    transform: translateY(60%);
+    opacity: 0;
+  }
+  25% {
+    transform: translateY(45%);
+  }
+  50% {
+    transform: translateY(30%);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translateY(15%);
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(30%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(60%);
+    opacity: 0;
+  }
+}

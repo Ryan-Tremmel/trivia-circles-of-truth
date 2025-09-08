@@ -1,0 +1,14 @@
+/* AmountIncorrect Component Styles */
+
+.amountIncorrect {
+  grid-row: amountIncorrect-start/triviaContainer-start;
+  display: flex;
+  justify-content: space-between;
+  align-self: end;
+  gap: 6rem;
+  font-size: 10rem;
+}
+
+.amountIncorrect--incorrect {
+  color: #e36040;
+}

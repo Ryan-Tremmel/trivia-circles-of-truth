@@ -1,0 +1,59 @@
+/* App Component Styles */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  padding: 6rem 4rem 1.5rem 4rem;
+  height: 100%;
+}
+
+@media (max-width: 90em) {
+  .app {
+    padding: 1rem 1.5rem 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 55.31em) {
+  .app {
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 42.19em) {
+  .app {
+    padding: 5rem 1.5rem 1rem 1.5rem;
+  }
+}
+
+.mainContent {
+  display: grid;
+  grid-template-rows: [amountIncorrect-start] minmax(max-content, auto) [triviaContainer-start] minmax(max-content, auto) [score-start] auto;
+  justify-items: center;
+  gap: 3rem;
+  width: 70%;
+}
+
+@media (max-width: 90em) {
+  .mainContent {
+    width: 100%;
+  }
+}
+
+.copyrightLoginContainer {
+  grid-row: copyrightLoginContainer-start;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  font-size: 1.5rem;
+  margin-top: auto;
+  width: 100%;
+}
+
+.copyright {
+  justify-self: left;
+}
+
+.loginUsername {
+  justify-self: right;
+}

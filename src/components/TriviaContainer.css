@@ -1,0 +1,65 @@
+/* TriviaContainer Component Styles */
+
+.triviaContainer {
+  grid-row: triviaContainer-start/score-start;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+@media (max-width: 55.31em) {
+  .triviaContainer {
+    gap: 2rem;
+  }
+}
+
+.skipNextContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+@media (max-width: 55.31em) {
+  .skipNextContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+  }
+}
+
+@media (max-width: 55.31em) {
+  .skipNextContainer {
+    margin-top: 1rem;
+  }
+}
+
+.skipNextContainer__text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+}
+
+@media (max-width: 55.31em) {
+  .btnSkip {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 55.31em) {
+  .btnNext {
+    grid-column: 1/3;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 55.31em) {
+  .btnBuyLives {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}

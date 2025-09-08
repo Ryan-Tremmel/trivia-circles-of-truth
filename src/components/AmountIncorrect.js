@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { TbSquareX } from 'react-icons/tb';
 import { TbSquareXFilled } from 'react-icons/tb';
+import './AmountIncorrect.css';
 
 export default function AmountIncorrect() {
   // State Management //

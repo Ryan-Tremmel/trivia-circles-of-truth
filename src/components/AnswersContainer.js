@@ -1,4 +1,5 @@
 import Answer from './Answer';
+import './AnswersContainer.css';
 
 export default function AnswersContainer({ currentQuestion, isClickable }) {
   // Maps through the currentQuestion object's answers array (containing all the answers to that particular question)

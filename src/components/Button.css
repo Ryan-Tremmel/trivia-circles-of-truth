@@ -1,0 +1,107 @@
+/* Button Component Styles */
+
+.btn {
+  border: none;
+  border-radius: 100px;
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.btn--long {
+  min-height: 5rem;
+  max-height: fit-content;
+  min-width: 40rem;
+  max-width: 45rem;
+}
+
+@media (max-width: 42.19em) {
+  .btn--long {
+    min-width: 30rem;
+    max-width: 35rem;
+  }
+}
+
+.btn--short {
+  height: 5rem;
+  width: 25rem;
+}
+
+@media (max-width: 42.19em) {
+  .btn--short {
+    width: 20rem;
+  }
+}
+
+.btn:hover {
+  transform: translateY(3%);
+  box-shadow: 7px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.btn:active {
+  transform: translateY(3%);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+}
+
+.btn--primary {
+  background: #2a9d8f;
+}
+
+.btn--primary:hover {
+  background: #227e72;
+}
+
+.btn--correct {
+  background: #e9c46a;
+}
+
+.btn--correct:hover {
+  background: #e9c46a;
+}
+
+.btn--incorrect {
+  background: #227e72;
+}
+
+.btn--incorrect:hover {
+  background: #227e72;
+}
+
+.btn--disabled {
+  background: #227e72;
+}
+
+.btn--secondary {
+  background: #6abab1;
+}
+
+.btn--secondary:hover {
+  background: #5aa8a0;
+}
+
+.btn--small {
+  height: 4rem;
+  width: 15rem;
+  font-size: 1.4rem;
+}
+
+@media (max-width: 42.19em) {
+  .btn--small {
+    height: 3.5rem;
+    width: 12rem;
+    font-size: 1.2rem;
+  }
+}
+
+.answer__text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+@media (max-width: 42.19em) {
+  .answer__text {
+    font-size: 1.6rem;
+  }
+}
