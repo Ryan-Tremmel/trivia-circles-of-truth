@@ -11,12 +11,12 @@ import { ERROR_MESSAGES } from '../constants/errorConstants';
 import { getErrorMessage, logError, isRetryableError } from '../utils/errorUtils';
 
 export const useQuestionDataManagement = (questionIndex) => {
-  // Redux state - exactly as in TriviaContainer
+  // Redux state
   const gameState = useSelector(state => state.gameState);
   const questionDifficulty = useSelector(state => state.questionDifficulty);
   const lives = useSelector(state => state.lives);
 
-  // Local state - exactly as in TriviaContainer
+  // Local state
   const [currentAPIQueryData, setCurrentAPIQueryData] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState({
     question: '',
@@ -28,11 +28,11 @@ export const useQuestionDataManagement = (questionIndex) => {
   const [retryCount, setRetryCount] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
 
-  // API query - exactly as in TriviaContainer
+  // API query
   const { data, isLoading, isError, isSuccess, isFetching, refetch, error } =
     useFetchQuestionsQuery(questionDifficulty);
 
-  // Utility function - exactly as in TriviaContainer
+  // Utility function
   const shuffleAnswers = function (answers) {
     for (let i = answers.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -41,7 +41,7 @@ export const useQuestionDataManagement = (questionIndex) => {
     return answers;
   };
 
-  // First useEffect - exactly as in TriviaContainer
+  // First useEffect - responsible for data fetching and updating the current question
   useEffect(() => {
     // Error handling with improved messaging
     if (isError) {
@@ -100,7 +100,7 @@ export const useQuestionDataManagement = (questionIndex) => {
     }
   }, [data, currentAPIQueryData, gameState, isError, isLoading, isFetching, questionIndex]);
 
-  // Second useEffect - exactly as in TriviaContainer
+  // Second useEffect - responsible for checking gameState and allowing buttons to be clickable as well as moving to next question
   useEffect(() => {
     // If the player has more than 1 life OR if the gameState is incorrect with 0 lives (end-game)
     if (lives >= 1 || (gameState === GAME_STATES.INCORRECT && lives === 0))
@@ -112,7 +112,7 @@ export const useQuestionDataManagement = (questionIndex) => {
     }
   }, [data, gameState]);
 
-  // Third useEffect - exactly as in TriviaContainer
+  // Third useEffect - responsible for fetching more questions towards the end of the data so that the game does not crash
   useEffect(() => {
     if (
       questionIndex > QUESTION_INDEX_THRESHOLD &&
