@@ -52,7 +52,7 @@ class ErrorBoundary extends Component {
                 Try Again
               </button>
               <button 
-                className="btn btn--secondary"
+                className="btn btn--primary"
                 onClick={() => window.location.reload()}
               >
                 Refresh Page

@@ -580,4 +580,81 @@ input[type=password] {
   justify-self: right;
 }
 
+/******************************/
+/***** ERROR BOUNDARY *****/
+/******************************/
+
+.error-boundary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.error-boundary__content {
+  text-align: center;
+  max-width: 60rem;
+  padding: 4rem 3rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.error-boundary__title {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  color: #227e72;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-boundary__message {
+  font-size: 1.8rem;
+  margin-bottom: 3rem;
+  color: #2a9d8f;
+  line-height: 1.6;
+}
+
+.error-boundary__actions {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-boundary__actions .btn {
+  font-size: 1.8rem;
+  padding: 1.5rem 2rem;
+}
+
+.error-boundary__details {
+  margin-top: 3rem;
+  text-align: left;
+  background: rgba(42, 157, 143, 0.1);
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1px solid rgba(42, 157, 143, 0.3);
+}
+
+.error-boundary__details summary {
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #227e72;
+}
+
+.error-boundary__stack {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  color: white;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
 /*# sourceMappingURL=index.css.map */
