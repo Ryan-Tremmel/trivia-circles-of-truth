@@ -69,14 +69,12 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
 
   const handleSignupSubmit = async (username, password, highscore) => {
     try {
-      setButtonText('Submitting Highscore...');
       await signupUser({ username, password, highscore }).unwrap();
     } catch (err) {
       logError(err, 'signup', { username, highscore });
       const errorMessage = getErrorMessage(err, 'auth');
       
       setLoseGameText(errorMessage);
-      setButtonText('Submit Highscore');
       setTimeout(() => {
         setLoseGameText(
           'You can either submit your highscore or you can restart and try again!'
@@ -118,16 +116,6 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
     }
   }, [countdown, isSuccessSignup, isSuccessUpdate]);
 
-  // Handle loading states for button text
-  useEffect(() => {
-    if (isLoadingSignup || isLoadingUpdate) {
-      setButtonText('Submitting Highscore...');
-    } else if ((isErrorSignup || isErrorUpdate) && !showForm) {
-      // Only reset button text on error if form is not open (to avoid conflict with form toggle)
-      setButtonText('Submit Highscore');
-    }
-  }, [isLoadingSignup, isLoadingUpdate, isErrorSignup, isErrorUpdate, showForm]);
-
   // Updating User Functionality
   const updateUserHighscore = async highscore => {
     try {
@@ -150,7 +138,6 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
     }
     // If a currentUser exists (logged in), will not open the form and will instead just submit the highscore
     else if (currentUserId && currentUserHighscore <= currentScore) {
-      setButtonText('Submitting Highscore...');
       updateUserHighscore(currentScore);
     } else {
       setButtonText('Close Form');
@@ -188,7 +175,7 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
         <HighscoreButton
           handleHighscoreClick={handleHighscoreClick}
           buttonText={buttonText}
-          isClickable={countdown <= 0 ? false : isClickable && !isLoadingSignup && !isLoadingUpdate}
+          isClickable={countdown <= 0 ? false : isClickable}
         />
         <RestartButton
           isClickable={isClickable}
