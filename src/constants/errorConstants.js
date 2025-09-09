@@ -12,6 +12,7 @@ export const ERROR_CONSTANTS = {
     // Authentication (matching backend responses)
     LOGIN_FAILED: 'Login failed. Please check your credentials.',
     SIGNUP_FAILED: 'Signup failed. Please try again.',
+    SIGNUP_VALIDATION_ERROR: 'Signup failed. Please check your username and password requirements.',
     AUTH_NETWORK_ERROR: 'Could not contact server - please try again later to log in.',
     PASSWORD_REQUIREMENTS: 'Password needs to be a minimum of eight alpha-numeric characters.',
     

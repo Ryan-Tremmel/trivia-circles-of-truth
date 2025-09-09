@@ -5,6 +5,7 @@ import Form from './Form';
 import HighscoreButton from './HighscoreButton';
 import RestartButton from './RestartButton';
 import { getErrorMessage, logError } from '../utils/errorUtils';
+import { ERROR_MESSAGES } from '../constants/errorConstants';
 import './LoseGame.css';
 
 export default function LoseGame({ isClickable, handleClickRestart }) {
@@ -72,17 +73,39 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
       await signupUser({ username, password, highscore }).unwrap();
     } catch (err) {
       logError(err, 'signup', { username, highscore });
-      const errorMessage = getErrorMessage(err, 'auth');
       
-      setLoseGameText(errorMessage);
+      // Handle different types of errors
+      let errorMessage;
+      
+      if (err.status === 'PARSING_ERROR') {
+        // Handle parsing errors - likely validation errors from backend
+        if (err.data && err.data.message) {
+          errorMessage = err.data.message;
+        } else if (err.error && err.error.data && err.error.data.message) {
+          errorMessage = err.error.data.message;
+        } else {
+          errorMessage = ERROR_MESSAGES.SIGNUP_VALIDATION_ERROR;
+        }
+      } else {
+        errorMessage = getErrorMessage(err, 'auth');
+      }
+      
       setTimeout(() => {
         setLoseGameText(
           'You can either submit your highscore or you can restart and try again!'
         );
       }, 5000);
+      setLoseGameText(errorMessage);
     }
   };
   // Functionality //
+  useEffect(() => {
+    // Handle loading states
+    if (isLoadingSignup || isLoadingUpdate) {
+      setLoseGameText('Submitting Highscore...');
+    }
+  }, [isLoadingSignup, isLoadingUpdate]);
+
   useEffect(() => {
     // If isSuccess, set a timeout and countdown as well as change highscoreButtonText to successful update
     if (isSuccessSignup || isSuccessUpdate) {
@@ -172,11 +195,13 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
         />
       )}
       <div className="loseGameBtnContainer">
-        <HighscoreButton
-          handleHighscoreClick={handleHighscoreClick}
-          buttonText={buttonText}
-          isClickable={countdown <= 0 ? false : isClickable}
-        />
+        {!(isSuccessSignup || isSuccessUpdate) && (
+          <HighscoreButton
+            handleHighscoreClick={handleHighscoreClick}
+            buttonText={buttonText}
+            isClickable={isClickable && !isLoadingSignup && !isLoadingUpdate}
+          />
+        )}
         <RestartButton
           isClickable={isClickable}
           handleClickRestart={handleClickRestart}
