@@ -44,7 +44,7 @@ export const getErrorMessage = (error, context = 'general') => {
     if (error.error && error.error.data && error.error.data.message) {
       return error.error.data.message;
     }
-    return ERROR_MESSAGES.PASSWORD_REQUIREMENTS;
+    return ERROR_MESSAGES.SIGNUP_VALIDATION_ERROR;
   }
   
   // Handle backend-specific error messages
