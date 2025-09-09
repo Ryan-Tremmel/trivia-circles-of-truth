@@ -138,7 +138,7 @@ export const handleValidationError = (error) => {
   }
   
   // Handle Mongoose validation errors
-  if (error?.data?.errors) {
+  if (error?.data?.errors && error.data.errors !== null) {
     const errors = error.data.errors;
     const firstError = Object.values(errors)[0];
     return firstError?.message || ERROR_MESSAGES.PASSWORD_REQUIREMENTS;

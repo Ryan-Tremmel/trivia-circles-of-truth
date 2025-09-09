@@ -4,8 +4,7 @@ import { setCurrentUser } from '../slices/currentUserSlice';
 export const currentUserApi = createApi({
   reducerPath: 'currentUserApi',
   baseQuery: fetchBaseQuery({
-    baseUrl:
-      'https://trivia-circles-of-truth-api.onrender.com/trivia/api/users',
+    baseUrl: 'http://localhost:8000/trivia/api/users',
   }),
   endpoints: builder => ({
     signupUser: builder.mutation({
@@ -23,6 +22,7 @@ export const currentUserApi = createApi({
           dispatch(setCurrentUser({ username, objectId, highscore }));
         } catch (err) {
           console.error('Signup failed', err);
+          // Don't try to access err.values - just log the error
         }
         /* dispatch(
           currentUserApi.util.updateQueryData('getCurrentUser', draft => {
