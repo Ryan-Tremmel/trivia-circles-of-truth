@@ -34,6 +34,8 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
     'You can either submit your highscore or you can restart and try again!'
   );
 
+  const [isError, setIsError] = useState(false);
+
   // Functions //
   const randomArrayGeneratorLoseGameText = numResponses => {
     const responses = [
@@ -90,12 +92,8 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
         errorMessage = getErrorMessage(err, 'auth');
       }
       
-      setTimeout(() => {
-        setLoseGameText(
-          'You can either submit your highscore or you can restart and try again!'
-        );
-      }, 5000);
       setLoseGameText(errorMessage);
+      setIsError(true);
     }
   };
   // Functionality //
@@ -103,6 +101,7 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
     // Handle loading states - only set loading text if not in error state
     if ((isLoadingSignup || isLoadingUpdate) && !isErrorSignup && !isErrorUpdate) {
       setLoseGameText('Submitting Highscore...');
+      setIsError(false);
     }
   }, [isLoadingSignup, isLoadingUpdate, isErrorSignup, isErrorUpdate]);
 
@@ -112,6 +111,7 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
       setLoseGameText(
         `Highscore successfully submitted! Please wait... ${countdown}`
       );
+      setIsError(false);
 
       const countdownTimer = setInterval(() => {
         setCountdown(prevCountdown => {
@@ -181,7 +181,10 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
         You lost! But that's okay because you get to keep $
         {currentScore.toLocaleString()}!
       </h3>
-      <p className="loseGame__textSmall mb-2">{loseGameText}</p>
+      <p className={`loseGame__textSmall mb-2 ${isError ? 'loseGame__textSmall--error' : ''}`}>
+        {isError && <span className="error-icon" aria-label="Error">⚠️</span>}
+        {loseGameText}
+      </p>
       {!showForm ? null : (
         <Form
           submitType={'signup'}
