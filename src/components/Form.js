@@ -67,6 +67,7 @@ export default function Form({
         type="text"
         value={username}
         maxLength={20}
+        required
         onChange={e => setUsername(e.target.value)}
       />
       <label className="form__label__password ml-1">Password</label>
@@ -75,6 +76,7 @@ export default function Form({
         type={!showPassword ? 'password' : 'text'}
         value={password}
         maxLength={25}
+        required
         onChange={e => setPassword(e.target.value)}
         style={{
           minWidth: `${passwordInputLength}rem`,
