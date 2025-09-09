@@ -36,7 +36,18 @@ export const getErrorType = (error) => {
 export const getErrorMessage = (error, context = 'general') => {
   const errorType = getErrorType(error);
   
-  // Handle backend-specific error messages first
+  // Handle parsing errors first (validation errors from backend)
+  if (error.status === 'PARSING_ERROR') {
+    if (error.data && error.data.message) {
+      return error.data.message;
+    }
+    if (error.error && error.error.data && error.error.data.message) {
+      return error.error.data.message;
+    }
+    return ERROR_MESSAGES.SIGNUP_VALIDATION_ERROR;
+  }
+  
+  // Handle backend-specific error messages
   if (error?.data?.message) {
     return error.data.message;
   }

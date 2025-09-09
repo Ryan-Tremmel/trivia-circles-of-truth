@@ -17,6 +17,16 @@
   text-align: center;
 }
 
+.loseGame__textSmall--error {
+  color: #e9c46a;
+  font-weight: 500;
+}
+
+.error-icon {
+  margin-right: 0.5rem;
+  font-size: 1.6rem;
+}
+
 .loseGameBtnContainer {
   display: flex;
   flex-direction: column;

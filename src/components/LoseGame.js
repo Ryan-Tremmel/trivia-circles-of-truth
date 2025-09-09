@@ -5,6 +5,7 @@ import Form from './Form';
 import HighscoreButton from './HighscoreButton';
 import RestartButton from './RestartButton';
 import { getErrorMessage, logError } from '../utils/errorUtils';
+import { ERROR_MESSAGES } from '../constants/errorConstants';
 import './LoseGame.css';
 
 export default function LoseGame({ isClickable, handleClickRestart }) {
@@ -32,6 +33,8 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
   const [loseGameText, setLoseGameText] = useState(
     'You can either submit your highscore or you can restart and try again!'
   );
+
+  const [isError, setIsError] = useState(false);
 
   // Functions //
   const randomArrayGeneratorLoseGameText = numResponses => {
@@ -72,23 +75,43 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
       await signupUser({ username, password, highscore }).unwrap();
     } catch (err) {
       logError(err, 'signup', { username, highscore });
-      const errorMessage = getErrorMessage(err, 'auth');
+      
+      // Handle different types of errors
+      let errorMessage;
+      
+      if (err.status === 'PARSING_ERROR') {
+        // Handle parsing errors - likely validation errors from backend
+        if (err.data && err.data.message) {
+          errorMessage = err.data.message;
+        } else if (err.error && err.error.data && err.error.data.message) {
+          errorMessage = err.error.data.message;
+        } else {
+          errorMessage = ERROR_MESSAGES.SIGNUP_VALIDATION_ERROR;
+        }
+      } else {
+        errorMessage = getErrorMessage(err, 'auth');
+      }
       
       setLoseGameText(errorMessage);
-      setTimeout(() => {
-        setLoseGameText(
-          'You can either submit your highscore or you can restart and try again!'
-        );
-      }, 5000);
+      setIsError(true);
     }
   };
   // Functionality //
+  useEffect(() => {
+    // Handle loading states - only set loading text if not in error state
+    if ((isLoadingSignup || isLoadingUpdate) && !isErrorSignup && !isErrorUpdate) {
+      setLoseGameText('Submitting Highscore...');
+      setIsError(false);
+    }
+  }, [isLoadingSignup, isLoadingUpdate, isErrorSignup, isErrorUpdate]);
+
   useEffect(() => {
     // If isSuccess, set a timeout and countdown as well as change highscoreButtonText to successful update
     if (isSuccessSignup || isSuccessUpdate) {
       setLoseGameText(
         `Highscore successfully submitted! Please wait... ${countdown}`
       );
+      setIsError(false);
 
       const countdownTimer = setInterval(() => {
         setCountdown(prevCountdown => {
@@ -158,7 +181,10 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
         You lost! But that's okay because you get to keep $
         {currentScore.toLocaleString()}!
       </h3>
-      <p className="loseGame__textSmall mb-2">{loseGameText}</p>
+      <p className={`loseGame__textSmall mb-2 ${isError ? 'loseGame__textSmall--error' : ''}`}>
+        {isError && <span className="error-icon" aria-label="Error">⚠️</span>}
+        {loseGameText}
+      </p>
       {!showForm ? null : (
         <Form
           submitType={'signup'}
@@ -172,11 +198,13 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
         />
       )}
       <div className="loseGameBtnContainer">
-        <HighscoreButton
-          handleHighscoreClick={handleHighscoreClick}
-          buttonText={buttonText}
-          isClickable={countdown <= 0 ? false : isClickable}
-        />
+        {!(isSuccessSignup || isSuccessUpdate) && (
+          <HighscoreButton
+            handleHighscoreClick={handleHighscoreClick}
+            buttonText={buttonText}
+            isClickable={isClickable && !isLoadingSignup && !isLoadingUpdate}
+          />
+        )}
         <RestartButton
           isClickable={isClickable}
           handleClickRestart={handleClickRestart}
