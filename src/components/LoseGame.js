@@ -70,25 +70,36 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
 
   const handleSignupSubmit = async (username, password, highscore) => {
     try {
+      console.log('Starting signup with:', { username, password: password.length, highscore });
       await signupUser({ username, password, highscore }).unwrap();
+      console.log('Signup successful');
     } catch (err) {
+      console.log('Signup failed - error caught:', err);
       logError(err, 'signup', { username, highscore });
+      console.log('Signup error structure:', err); // Debug log
       
       // Handle different types of errors
       let errorMessage;
       
       if (err.status === 'PARSING_ERROR') {
+        console.log('Parsing error detected');
         // Handle parsing errors - likely validation errors from backend
         if (err.data && err.data.message) {
           errorMessage = err.data.message;
+          console.log('Using err.data.message:', errorMessage);
         } else if (err.error && err.error.data && err.error.data.message) {
           errorMessage = err.error.data.message;
+          console.log('Using err.error.data.message:', errorMessage);
         } else {
           errorMessage = ERROR_MESSAGES.SIGNUP_VALIDATION_ERROR;
+          console.log('Using fallback message:', errorMessage);
         }
       } else {
         errorMessage = getErrorMessage(err, 'auth');
+        console.log('Using getErrorMessage result:', errorMessage);
       }
+      
+      console.log('Final error message:', errorMessage);
       
       setTimeout(() => {
         setLoseGameText(
@@ -100,11 +111,13 @@ export default function LoseGame({ isClickable, handleClickRestart }) {
   };
   // Functionality //
   useEffect(() => {
-    // Handle loading states
-    if (isLoadingSignup || isLoadingUpdate) {
+    console.log('Loading state useEffect:', { isLoadingSignup, isLoadingUpdate, isErrorSignup, isErrorUpdate });
+    // Handle loading states - only set loading text if not in error state
+    if ((isLoadingSignup || isLoadingUpdate) && !isErrorSignup && !isErrorUpdate) {
+      console.log('Setting loading text');
       setLoseGameText('Submitting Highscore...');
     }
-  }, [isLoadingSignup, isLoadingUpdate]);
+  }, [isLoadingSignup, isLoadingUpdate, isErrorSignup, isErrorUpdate]);
 
   useEffect(() => {
     // If isSuccess, set a timeout and countdown as well as change highscoreButtonText to successful update
